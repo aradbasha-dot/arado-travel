@@ -1,630 +1,929 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arado Travel | Flights & Hotels</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arado Travel</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f5f7fb;
-            color: #172033;
-        }
+:root{
+  --green:#087f5b;
+  --green2:#0aa574;
+  --dark:#10231d;
+  --text:#18342b;
+  --muted:#6c7d76;
+  --bg:#f5f8f7;
+  --white:#fff;
+  --border:#e1e9e5;
+  --shadow:0 12px 35px rgba(16,35,29,.10);
+}
 
-        header {
-            background: white;
-            padding: 20px 7%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #e8ebf0;
-        }
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
 
-        .logo {
-            font-size: 28px;
-            font-weight: 800;
-            color: #087f5b;
-            letter-spacing: 1px;
-        }
+button,input,select{
+  font:inherit;
+}
 
-        .logo span {
-            color: #172033;
-        }
+button{
+  cursor:pointer;
+}
 
-        nav {
-            display: flex;
-            gap: 28px;
-            align-items: center;
-        }
+.header{
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:20;
+}
 
-        nav a {
-            text-decoration: none;
-            color: #333b4d;
-            font-weight: 600;
-        }
+.nav{
+  max-width:1180px;
+  margin:auto;
+  padding:15px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
 
-        .login {
-            border: 1px solid #087f5b;
-            color: #087f5b;
-            padding: 10px 20px;
-            border-radius: 8px;
-        }
+.logo{
+  font-size:24px;
+  font-weight:800;
+  color:var(--green);
+  letter-spacing:-.5px;
+}
 
-        .hero {
-            min-height: 520px;
-            padding: 80px 7%;
-            background:
-                linear-gradient(rgba(7, 31, 50, 0.72), rgba(7, 31, 50, 0.72)),
-                url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=80");
-            background-size: cover;
-            background-position: center;
-            color: white;
-        }
+.logo span{
+  color:var(--dark);
+}
 
-        .hero-content {
-            max-width: 850px;
-            margin: auto;
-            text-align: center;
-        }
+.nav-links{
+  display:flex;
+  gap:8px;
+}
 
-        .hero h1 {
-            font-size: 52px;
-            margin-bottom: 18px;
-        }
+.nav-links button{
+  border:0;
+  background:transparent;
+  color:#52645d;
+  padding:9px 12px;
+  border-radius:9px;
+}
 
-        .hero h1 span {
-            color: #37d39b;
-        }
+.nav-links button:hover{
+  background:#eef7f3;
+  color:var(--green);
+}
 
-        .hero p {
-            font-size: 20px;
-            margin-bottom: 45px;
-            color: #e5edf2;
-        }
+.hero{
+  background:
+    linear-gradient(135deg,rgba(5,80,57,.96),rgba(9,142,99,.88)),
+    radial-gradient(circle at top right,#48d6a5,transparent 40%);
+  color:#fff;
+  padding:55px 20px 75px;
+}
 
-        .search-box {
-            background: white;
-            border-radius: 16px;
-            padding: 18px;
-            color: #172033;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-        }
+.hero-inner{
+  max-width:1180px;
+  margin:auto;
+}
 
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 18px;
-        }
+.badge{
+  display:inline-block;
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.25);
+  padding:8px 13px;
+  border-radius:30px;
+  font-size:13px;
+  margin-bottom:18px;
+}
 
-        .tab {
-            border: none;
-            background: #edf2f5;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 700;
-            color: #333b4d;
-        }
+.hero h1{
+  font-size:clamp(34px,6vw,62px);
+  line-height:1.05;
+  max-width:720px;
+  letter-spacing:-2px;
+}
 
-        .tab.active {
-            background: #087f5b;
-            color: white;
-        }
+.hero p{
+  margin-top:18px;
+  font-size:17px;
+  line-height:1.6;
+  max-width:650px;
+  color:#e3f7ef;
+}
 
-        .search-fields {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-        }
+.search-card{
+  max-width:1050px;
+  margin:-38px auto 0;
+  position:relative;
+  z-index:5;
+  background:#fff;
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  padding:18px;
+}
 
-        .field {
-            border: 1px solid #dce1e8;
-            padding: 12px;
-            border-radius: 9px;
-            text-align: left;
-        }
+.service-tabs{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:8px;
+  margin-bottom:18px;
+}
 
-        .field label {
-            display: block;
-            font-size: 12px;
-            color: #777f8d;
-            margin-bottom: 5px;
-        }
+.service-tab{
+  border:1px solid var(--border);
+  background:#fff;
+  padding:13px 7px;
+  border-radius:12px;
+  color:#51645d;
+  font-size:13px;
+  font-weight:700;
+}
 
-        .field input,
-        .field select {
-            width: 100%;
-            border: none;
-            outline: none;
-            font-size: 15px;
-            background: transparent;
-            color: #172033;
-        }
+.service-tab.active{
+  background:#e9f8f2;
+  color:var(--green);
+  border-color:#b9e6d5;
+}
 
-        .search-button {
-            margin-top: 15px;
-            width: 100%;
-            border: none;
-            background: #087f5b;
-            color: white;
-            padding: 16px;
-            border-radius: 9px;
-            font-size: 17px;
-            font-weight: 700;
-            cursor: pointer;
-        }
+.search-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr) auto;
+  gap:10px;
+}
 
-        .search-button:hover {
-            background: #066a4b;
-        }
+.field{
+  border:1px solid var(--border);
+  border-radius:11px;
+  padding:11px 13px;
+  background:#fff;
+}
 
-        .features {
-            padding: 65px 7%;
-            background: white;
-        }
+.field label{
+  display:block;
+  color:#7a8983;
+  font-size:11px;
+  margin-bottom:5px;
+}
 
-        .section-title {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+.field input,
+.field select{
+  border:0;
+  outline:0;
+  width:100%;
+  background:transparent;
+  color:var(--text);
+  font-weight:600;
+}
 
-        .section-title h2 {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
+.search-btn{
+  border:0;
+  border-radius:11px;
+  padding:0 22px;
+  background:var(--green);
+  color:#fff;
+  font-weight:700;
+}
 
-        .section-title p {
-            color: #727b8b;
-        }
+.search-btn:hover{
+  background:#066c4d;
+}
 
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-            max-width: 1100px;
-            margin: auto;
-        }
+.section{
+  max-width:1180px;
+  margin:55px auto;
+  padding:0 20px;
+}
 
-        .card {
-            padding: 30px;
-            background: #f7f9fb;
-            border-radius: 14px;
-            text-align: center;
-        }
+.section-title{
+  text-align:center;
+  margin-bottom:28px;
+}
 
-        .icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
+.section-title h2{
+  font-size:30px;
+  color:var(--dark);
+}
 
-        .card h3 {
-            margin-bottom: 10px;
-        }
+.section-title p{
+  color:var(--muted);
+  margin-top:8px;
+}
 
-        .card p {
-            color: #70798a;
-            line-height: 1.6;
-        }
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
 
-        footer {
-            background: #111827;
-            color: white;
-            padding: 30px 7%;
-            text-align: center;
-        }
+.card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:25px;
+  box-shadow:0 5px 20px rgba(16,35,29,.05);
+  transition:.2s;
+}
 
-        footer p {
-            color: #aeb7c6;
-        }
+.card:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--shadow);
+}
 
-        @media (max-width: 800px) {
-            nav {
-                display: none;
-            }
+.icon{
+  width:48px;
+  height:48px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#eaf8f3;
+  font-size:24px;
+  margin-bottom:17px;
+}
 
-            .hero h1 {
-                font-size: 38px;
-            }
+.card h3{
+  font-size:19px;
+  margin-bottom:9px;
+}
 
-            .search-fields {
-                grid-template-columns: 1fr;
-            }
+.card p{
+  color:var(--muted);
+  line-height:1.55;
+  font-size:14px;
+}
 
-            .cards {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+.card button{
+  margin-top:17px;
+  border:1px solid #cce8dc;
+  background:#f2fbf7;
+  color:var(--green);
+  padding:9px 14px;
+  border-radius:9px;
+  font-weight:700;
+}
+
+.results{
+  max-width:1050px;
+  margin:25px auto 0;
+  padding:0 20px;
+}
+
+.result-box{
+  display:none;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+
+.result-box.show{
+  display:block;
+}
+
+.result-box h3{
+  margin-bottom:15px;
+}
+
+.result-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  padding:15px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.result-item:last-child{
+  border-bottom:0;
+}
+
+.result-item strong{
+  display:block;
+  margin-bottom:4px;
+}
+
+.result-item small{
+  color:var(--muted);
+}
+
+.price{
+  font-weight:800;
+  color:var(--green);
+  white-space:nowrap;
+}
+
+.cta{
+  background:var(--dark);
+  color:#fff;
+  border-radius:22px;
+  padding:40px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:25px;
+}
+
+.cta h2{
+  font-size:30px;
+  margin-bottom:8px;
+}
+
+.cta p{
+  color:#bcd0c8;
+}
+
+.cta button{
+  border:0;
+  background:#fff;
+  color:var(--green);
+  padding:13px 20px;
+  border-radius:10px;
+  font-weight:800;
+}
+
+.footer{
+  background:#0d211a;
+  color:#b7c9c1;
+  padding:35px 20px;
+  margin-top:70px;
+}
+
+.footer-inner{
+  max-width:1180px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.footer strong{
+  color:#fff;
+}
+
+@media(max-width:850px){
+  .nav-links{
+    display:none;
+  }
+
+  .service-tabs{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .search-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .search-btn{
+    min-height:48px;
+  }
+
+  .cards{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:560px){
+  .hero{
+    padding:40px 16px 65px;
+  }
+
+  .hero h1{
+    font-size:39px;
+  }
+
+  .search-card{
+    margin:0 14px;
+    margin-top:-25px;
+    padding:12px;
+  }
+
+  .service-tabs{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .service-tab{
+    font-size:11px;
+    padding:10px 3px;
+  }
+
+  .search-grid{
+    grid-template-columns:1fr;
+  }
+
+  .search-btn{
+    min-height:48px;
+  }
+
+  .cards{
+    grid-template-columns:1fr;
+  }
+
+  .section{
+    margin:42px auto;
+  }
+
+  .cta{
+    padding:28px 22px;
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .footer-inner{
+    flex-direction:column;
+  }
+}
+</style>
 </head>
 
 <body>
 
-<header>
-    <div class="logo">
-        ARADO <span>TRAVEL</span>
-    </div>
+<header class="header">
+  <nav class="nav">
+    <div class="logo">Arado <span>Travel</span></div>
 
-    <nav>
-        <a href="#">Flights</a>
-        <a href="#">Hotels</a>
-        <a href="#">Visa</a>
-        <a href="#">My Booking</a>
-        <a href="#" class="login">Login</a>
-    </nav>
+    <div class="nav-links">
+      <button onclick="selectService('Flights')">Flights</button>
+      <button onclick="selectService('Hotels')">Hotels</button>
+      <button onclick="selectService('eSIM')">eSIM</button>
+      <button onclick="selectService('Cars')">Cars</button>
+      <button onclick="selectService('Currency')">Currency</button>
+    </div>
+  </nav>
 </header>
 
 <section class="hero">
-
-    <div class="hero-content">
-
-        <h1>
-            Explore the world with
-            <span>Arado Travel</span>
-        </h1>
-
-        <p>
-            Search flights, hotels and unforgettable travel experiences.
-        </p>
-
-        <div class="search-box">
-
-            <div class="tabs">
-                <button class="tab active">✈️ Flights</button>
-                <button class="tab">🏨 Hotels</button>
-            </div>
-
-            <div class="search-fields">
-
-                <div class="field">
-                    <label>FROM</label>
-                    <input type="text" placeholder="Baghdad (BGW)">
-                </div>
-
-                <div class="field">
-                    <label>TO</label>
-                    <input type="text" placeholder="Istanbul (IST)">
-                </div>
-
-                <div class="field">
-                    <label>DEPARTURE</label>
-                    <input type="date">
-                </div>
-
-                <div class="field">
-                    <label>PASSENGERS</label>
-                    <select>
-                        <option>1 Adult</option>
-                        <option>2 Adults</option>
-                        <option>3 Adults</option>
-                        <option>4 Adults</option>
-                        <option>5 Adults</option>
-                    </select>
-                </div>
-
-            </div>
-
-            <button class="search-button">
-                🔍 Search Flights
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-<section class="features">
-
-    <div class="section-title">
-        <h2>Everything you need for your trip</h2>
-        <p>Simple, fast and convenient travel booking.</p>
-    </div>
-
-    <div class="cards">
-
-        <div class="card">
-            <div class="icon">✈️</div>
-            <h3>Flights</h3>
-            <p>
-                Search and compare flights from destinations around the world.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="icon">🏨</div>
-            <h3>Hotels</h3>
-            <p>
-                Find hotels and accommodation for your next adventure.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="icon">🌍</div>
-            <h3>Travel Services</h3>
-            <p>
-                Visa assistance, airport services and travel support.
-            </p>
-        </div>
-
-    </div>
-
-</section>
-
-<footer>
+  <div class="hero-inner">
+    <div class="badge">✈️ Your journey starts here</div>
+    <h1>Explore the world with Arado Travel</h1>
     <p>
-        © 2026 Arado Travel. All rights reserved.
+      Search flights, hotels, eSIMs and car rentals in one simple travel platform.
+      More services are coming soon.
     </p>
+  </div>
+</section>
+
+<div class="search-card">
+
+  <div class="service-tabs">
+    <button class="service-tab active" onclick="selectService('Flights')">✈️ Flights</button>
+    <button class="service-tab" onclick="selectService('Hotels')">🏨 Hotels</button>
+    <button class="service-tab" onclick="selectService('eSIM')">📱 eSIM</button>
+    <button class="service-tab" onclick="selectService('Cars')">🚗 Cars</button>
+    <button class="service-tab" onclick="selectService('Currency')">💱 Currency</button>
+    <button class="service-tab" onclick="selectService('Visa')">🛂 Visa</button>
+  </div>
+
+  <div id="searchFields" class="search-grid">
+
+    <div class="field">
+      <label>FROM</label>
+      <input id="from" placeholder="Baghdad (BGW)">
+    </div>
+
+    <div class="field">
+      <label>TO</label>
+      <input id="to" placeholder="Destination">
+    </div>
+
+    <div class="field">
+      <label>DATE</label>
+      <input id="date" type="date">
+    </div>
+
+    <div class="field">
+      <label>TRAVELERS</label>
+      <select id="travelers">
+        <option>1 Adult</option>
+        <option>2 Adults</option>
+        <option>3 Adults</option>
+        <option>4 Adults</option>
+      </select>
+    </div>
+
+    <button class="search-btn" onclick="searchTravel()">Search</button>
+
+  </div>
+
+</div>
+
+<div class="results">
+  <div id="results" class="result-box">
+    <h3 id="resultTitle">Available options</h3>
+    <div id="resultContent"></div>
+  </div>
+</div>
+
+<section class="section">
+
+  <div class="section-title">
+    <h2>Everything you need to travel</h2>
+    <p>Simple tools for your next journey.</p>
+  </div>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="icon">✈️</div>
+      <h3>Flights</h3>
+      <p>Search flights between destinations and compare available options.</p>
+      <button onclick="selectService('Flights')">Search flights</button>
+    </div>
+
+    <div class="card">
+      <div class="icon">🏨</div>
+      <h3>Hotels</h3>
+      <p>Find hotels and accommodation for your next trip.</p>
+      <button onclick="selectService('Hotels')">Find hotels</button>
+    </div>
+
+    <div class="card">
+      <div class="icon">📱</div>
+      <h3>eSIM</h3>
+      <p>Stay connected while travelling with international eSIM plans.</p>
+      <button onclick="selectService('eSIM')">Explore eSIM</button>
+    </div>
+
+    <div class="card">
+      <div class="icon">🚗</div>
+      <h3>Car Rental</h3>
+      <p>Find rental cars for cities and destinations around the world.</p>
+      <button onclick="selectService('Cars')">Rent a car</button>
+    </div>
+
+    <div class="card">
+      <div class="icon">💱</div>
+      <h3>Currency</h3>
+      <p>Quickly check currencies and exchange rates while travelling.</p>
+      <button onclick="selectService('Currency')">Convert currency</button>
+    </div>
+
+    <div class="card">
+      <div class="icon">🛂</div>
+      <h3>Visa Assistance</h3>
+      <p>Get travel and visa assistance for selected destinations.</p>
+      <button onclick="selectService('Visa')">Visa assistance</button>
+    </div>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="cta">
+    <div>
+      <h2>Travel smarter with Arado.</h2>
+      <p>One platform for your journey.</p>
+    </div>
+    <button onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      Start planning
+    </button>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <strong>Arado Travel</strong><br>
+      Your journey starts here.
+    </div>
+    <div>Flights · Hotels · eSIM · Cars</div>
+  </div>
 </footer>
 
 <script>
-alert("Arado Travel is working!");
-</script>
-<script>
-document.querySelector(".search-button").addEventListener("click", function () {
 
-    const inputs = document.querySelectorAll('input[type="text"]');
-    const from = inputs[0].value;
-    const to = inputs[1].value;
+let currentService = "Flights";
 
-    if (!from || !to) {
-        alert("Please enter your departure and destination.");
-        return;
+function selectService(service){
+
+  currentService = service;
+
+  const tabs = document.querySelectorAll(".service-tab");
+
+  tabs.forEach(tab=>{
+    tab.classList.remove("active");
+
+    if(tab.textContent.toLowerCase().includes(service.toLowerCase())){
+      tab.classList.add("active");
     }
+  });
 
-    const results = `
-        <div style="
-            background:white;
-            margin:30px auto;
-            padding:25px;
-            max-width:900px;
-            border-radius:16px;
-            box-shadow:0 5px 20px rgba(0,0,0,0.12);
-        ">
-            <h2>✈️ Available Flights</h2>
-            <p>
-                ${from} → ${to}
-            </p>
+  const grid = document.getElementById("searchFields");
 
-            <div style="
-                border:1px solid #ddd;
-                padding:20px;
-                margin-top:20px;
-                border-radius:12px;
-            ">
-                <h3>Turkish Airlines</h3>
-                <p>✈️ ${from} → ${to}</p>
-                <p>Departure: 08:30</p>
-                <p>Arrival: 12:10</p>
-                <h3>$320</h3>
-                <button onclick="selectFlight('Turkish Airlines', 320)" style="
-                    background:#08a878;
-                    color:white;
-                    border:none;
-                    padding:12px 25px;
-                    border-radius:8px;
-                    cursor:pointer;
-                ">
-                    Select Flight
-                </button>
-            </div>
+  if(service === "Flights"){
+    grid.innerHTML = `
+      <div class="field">
+        <label>FROM</label>
+        <input id="from" placeholder="Baghdad (BGW)">
+      </div>
 
-            <div style="
-                border:1px solid #ddd;
-                padding:20px;
-                margin-top:15px;
-                border-radius:12px;
-            ">
-                <h3>Qatar Airways</h3>
-                <p>✈️ ${from} → ${to}</p>
-                <p>Departure: 14:20</p>
-                <p>Arrival: 19:00</p>
-                <h3>$285</h3>
-                <button onclick="selectFlight('Qatar Airways', 285)" style="
-                    background:#08a878;
-                    color:white;
-                    border:none;
-                    padding:12px 25px;
-                    border-radius:8px;
-                    cursor:pointer;
-                ">
-                    Select Flight
-                </button>
-            </div>
+      <div class="field">
+        <label>TO</label>
+        <input id="to" placeholder="Destination">
+      </div>
 
-            <div style="
-                border:1px solid #ddd;
-                padding:20px;
-                margin-top:15px;
-                border-radius:12px;
-            ">
-                <h3>Royal Jordanian</h3>
-                <p>✈️ ${from} → ${to}</p>
-                <p>Departure: 18:45</p>
-                <p>Arrival: 23:20</p>
-                <h3>$245</h3>
-                <button onclick="selectFlight('Royal Jordanian', 245)" style="
-                    background:#08a878;
-                    color:white;
-                    border:none;
-                    padding:12px 25px;
-                    border-radius:8px;
-                    cursor:pointer;
-                ">
-                    Select Flight
-                </button>
-            </div>
-        </div>
+      <div class="field">
+        <label>DATE</label>
+        <input id="date" type="date">
+      </div>
+
+      <div class="field">
+        <label>TRAVELERS</label>
+        <select id="travelers">
+          <option>1 Adult</option>
+          <option>2 Adults</option>
+          <option>3 Adults</option>
+          <option>4 Adults</option>
+        </select>
+      </div>
+
+      <button class="search-btn" onclick="searchTravel()">Search</button>
     `;
+  }
 
-    document.querySelector(".features").insertAdjacentHTML(
-        "beforebegin",
-        results
-    );
+  if(service === "Hotels"){
+    grid.innerHTML = `
+      <div class="field">
+        <label>DESTINATION</label>
+        <input id="to" placeholder="City or hotel">
+      </div>
 
-});
-</script>
-<script>
-function selectFlight(airline, price) {
-    document.body.innerHTML = `
-        <div style="
-            max-width:600px;
-            margin:50px auto;
-            padding:30px;
-            font-family:Arial;
-            background:white;
-            border-radius:15px;
-            box-shadow:0 4px 20px rgba(0,0,0,0.15);
-        ">
-            <h1 style="color:#08a878;">✈️ Booking Details</h1>
+      <div class="field">
+        <label>CHECK-IN</label>
+        <input id="date" type="date">
+      </div>
 
-            <h2>${airline}</h2>
+      <div class="field">
+        <label>CHECK-OUT</label>
+        <input id="date2" type="date">
+      </div>
 
-            <p><strong>Route:</strong> Baghdad → Istanbul</p>
-            <p><strong>Price:</strong> $${price}</p>
+      <div class="field">
+        <label>GUESTS</label>
+        <select>
+          <option>1 Guest</option>
+          <option>2 Guests</option>
+          <option>3 Guests</option>
+          <option>4 Guests</option>
+        </select>
+      </div>
 
-            <hr>
-
-            <h3>Passenger Information</h3>
-
-            <input type="text" placeholder="Full Name"
-                style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box;">
-
-            <input type="email" placeholder="Email"
-                style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box;">
-
-            <input type="tel" placeholder="Phone Number"
-                style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box;">
-
-            <input type="text" placeholder="Passport Number"
-                style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box;">
-
-            <button onclick="confirmBooking('${airline}', ${price})"                style="
-                    width:100%;
-                    margin-top:20px;
-                    padding:15px;
-                    background:#08a878;
-                    color:white;
-                    border:none;
-                    border-radius:8px;
-                    font-size:18px;
-                    cursor:pointer;
-                ">
-                Continue to Booking
-            </button>
-
-            <button onclick="location.reload()"
-                style="
-                    width:100%;
-                    margin-top:10px;
-                    padding:12px;
-                    background:#ddd;
-                    border:none;
-                    border-radius:8px;
-                    cursor:pointer;
-                ">
-                ← Back to Flights
-            </button>
-        </div>
+      <button class="search-btn" onclick="searchTravel()">Search</button>
     `;
-}
-
-function confirmBooking(airline, price) {
-    const inputs = document.querySelectorAll('input');
-const fullName = inputs[0].value.trim();
-const email = inputs[1].value.trim();
-const phone = inputs[2].value.trim();
-const passport = inputs[3].value.trim();
- 
-
-  if (!fullName) {
-    alert("Please enter your full name.");
-    return;
   }
 
-  if (!email) {
-    alert("Please enter your email.");
-    return;
+  if(service === "eSIM"){
+    grid.innerHTML = `
+      <div class="field">
+        <label>COUNTRY</label>
+        <input id="to" placeholder="Turkey, Germany, Canada...">
+      </div>
+
+      <div class="field">
+        <label>DATA</label>
+        <select>
+          <option>1 GB</option>
+          <option>3 GB</option>
+          <option>5 GB</option>
+          <option>10 GB</option>
+          <option>Unlimited</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>DURATION</label>
+        <select>
+          <option>7 Days</option>
+          <option>15 Days</option>
+          <option>30 Days</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>NETWORK</label>
+        <input placeholder="Any network">
+      </div>
+
+      <button class="search-btn" onclick="searchTravel()">Find eSIM</button>
+    `;
   }
-  if (!email.includes("@") || !email.includes(".")) {
-  alert("Please enter a valid email.");
-  return;
+
+  if(service === "Cars"){
+    grid.innerHTML = `
+      <div class="field">
+        <label>PICKUP LOCATION</label>
+        <input id="to" placeholder="City or airport">
+      </div>
+
+      <div class="field">
+        <label>PICKUP DATE</label>
+        <input type="date">
+      </div>
+
+      <div class="field">
+        <label>RETURN DATE</label>
+        <input type="date">
+      </div>
+
+      <div class="field">
+        <label>CAR TYPE</label>
+        <select>
+          <option>Any car</option>
+          <option>Economy</option>
+          <option>Comfort</option>
+          <option>SUV</option>
+        </select>
+      </div>
+
+      <button class="search-btn" onclick="searchTravel()">Search cars</button>
+    `;
+  }
+
+  if(service === "Currency"){
+    grid.innerHTML = `
+      <div class="field">
+        <label>FROM</label>
+        <select>
+          <option>USD — US Dollar</option>
+          <option>CAD — Canadian Dollar</option>
+          <option>EUR — Euro</option>
+          <option>IQD — Iraqi Dinar</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>TO</label>
+        <select>
+          <option>IQD — Iraqi Dinar</option>
+          <option>USD — US Dollar</option>
+          <option>EUR — Euro</option>
+          <option>CAD — Canadian Dollar</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>AMOUNT</label>
+        <input type="number" placeholder="100">
+      </div>
+
+      <div class="field">
+        <label>RATE</label>
+        <input value="Live rates coming soon" disabled>
+      </div>
+
+      <button class="search-btn" onclick="searchTravel()">Convert</button>
+    `;
+  }
+
+  if(service === "Visa"){
+    grid.innerHTML = `
+      <div class="field">
+        <label>YOUR NATIONALITY</label>
+        <input placeholder="Iraqi">
+      </div>
+
+      <div class="field">
+        <label>DESTINATION</label>
+        <input placeholder="Germany, Canada, Turkey...">
+      </div>
+
+      <div class="field">
+        <label>TRAVEL PURPOSE</label>
+        <select>
+          <option>Tourism</option>
+          <option>Business</option>
+          <option>Visit family</option>
+          <option>Study</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>ASSISTANCE</label>
+        <select>
+          <option>Visa information</option>
+          <option>Application assistance</option>
+          <option>Document assistance</option>
+        </select>
+      </div>
+
+      <button class="search-btn" onclick="searchTravel()">Continue</button>
+    `;
+  }
+
+  window.scrollTo({
+    top:document.querySelector(".search-card").offsetTop - 20,
+    behavior:"smooth"
+  });
 }
 
-  if (!phone) {
-    alert("Please enter your phone number.");
-    return;
+function searchTravel(){
+
+  const results = document.getElementById("results");
+  const title = document.getElementById("resultTitle");
+  const content = document.getElementById("resultContent");
+
+  results.classList.add("show");
+
+  title.textContent = currentService + " — Preview";
+
+  if(currentService === "Flights"){
+    content.innerHTML = `
+      <div class="result-item">
+        <div>
+          <strong>✈️ Turkish Airlines</strong>
+          <small>Baghdad → Istanbul · Economy</small>
+        </div>
+        <div class="price">From $285</div>
+      </div>
+
+      <div class="result-item">
+        <div>
+          <strong>✈️ Qatar Airways</strong>
+          <small>Baghdad → Doha · Economy</small>
+        </div>
+        <div class="price">From $310</div>
+      </div>
+
+      <div class="result-item">
+        <div>
+          <strong>✈️ Emirates</strong>
+          <small>Baghdad → Dubai · Economy</small>
+        </div>
+        <div class="price">From $325</div>
+      </div>
+    `;
   }
-  if (phone.length < 7) {
-  alert("Please enter a valid phone number.");
-  return;
+
+  else if(currentService === "Hotels"){
+    content.innerHTML = `
+      <div class="result-item">
+        <div>
+          <strong>🏨 Recommended hotels</strong>
+          <small>Live hotel inventory will be connected next.</small>
+        </div>
+        <div class="price">View</div>
+      </div>
+    `;
+  }
+
+  else if(currentService === "eSIM"){
+    content.innerHTML = `
+      <div class="result-item">
+        <div>
+          <strong>📱 International eSIM</strong>
+          <small>Data plans and live prices will be connected next.</small>
+        </div>
+        <div class="price">View</div>
+      </div>
+    `;
+  }
+
+  else if(currentService === "Cars"){
+    content.innerHTML = `
+      <div class="result-item">
+        <div>
+          <strong>🚗 Rental cars</strong>
+          <small>Live rental inventory will be connected next.</small>
+        </div>
+        <div class="price">View</div>
+      </div>
+    `;
+  }
+
+  else if(currentService === "Currency"){
+    content.innerHTML = `
+      <div class="result-item">
+        <div>
+          <strong>💱 Currency Converter</strong>
+          <small>Live exchange rates will be connected next.</small>
+        </div>
+        <div class="price">Coming soon</div>
+      </div>
+    `;
+  }
+
+  else{
+    content.innerHTML = `
+      <div class="result-item">
+        <div>
+          <strong>🛂 Visa Assistance</strong>
+          <small>Tell us your destination and we can prepare the next step.</small>
+        </div>
+        <div class="price">Contact</div>
+      </div>
+    `;
+  }
 }
 
-  if (!passport) {
-    alert("Please enter your passport number.");
-    return;
-  }
-
-  const bookingRef = "ARD-" + Math.floor(10000 + Math.random() * 90000);
-
-document.body.innerHTML = `
-  <div style="
-    max-width:600px;
-    margin:50px auto;
-    padding:30px;
-    font-family:Arial;
-    background:white;
-    border-radius:15px;
-    box-shadow:0 4px 20px rgba(0,0,0,0.15);
-  ">
-    <h1 style="color:#08a878;">✓ Booking Confirmed</h1>
-
-    <h2>${airline}</h2>
-
-    <p><strong>Route:</strong> Baghdad → Istanbul</p>
-    <p><strong>Passenger:</strong> ${fullName}</p>
-    <p><strong>Email:</strong> ${email}</p>
-    <p><strong>Phone:</strong> ${phone}</p>
-    <p><strong>Price:</strong> $${price}</p>
-
-    <hr>
-
-    <h3>Booking Reference</h3>
-    <div style="
-      font-size:24px;
-      font-weight:bold;
-      color:#08a878;
-      margin:15px 0;
-    ">
-      ${bookingRef}
-    </div>
-
-    <p>Your booking request has been received successfully.</p>
-
-    <button onclick="location.reload()" style="
-      width:100%;
-      padding:15px;
-      background:#08a878;
-      color:white;
-      border:none;
-      border-radius:8px;
-      font-size:16px;
-      cursor:pointer;
-    ">
-      Back to Home
-    </button>
-  </div>
-`;
-}
 </script>
-</script>
+
 </body>
-
-
 </html>
