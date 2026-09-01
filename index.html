@@ -922,6 +922,113 @@ function searchTravel(){
     `;
   }
 }
+  document.querySelector(".search-button").addEventListener("click", async function (event) {
+  event.stopImmediatePropagation();
+
+  const inputs = document.querySelectorAll('input[type="text"]');
+  const from = inputs[0].value.trim();
+  const to = inputs[1].value.trim();
+  const date = document.querySelector('input[type="date"]').value;
+  const passengers = document.querySelector("select").value.split(" ")[0];
+
+  if (!from || !to || !date) {
+    alert("Please enter departure, destination and date.");
+    return;
+  }
+
+  const origin = from.match(/\(([A-Za-z]{3})\)/)?.[1] || from;
+  const destination = to.match(/\(([A-Za-z]{3})\)/)?.[1] || to;
+
+  const button = this;
+  button.disabled = true;
+  button.textContent = "Searching...";
+
+  try {
+    const response = await fetch(
+      `/api/search?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}&departure_date=${encodeURIComponent(date)}&passengers=${encodeURIComponent(passengers)}`
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.error || "Flight search failed");
+    }
+
+    const offers = result.data?.offers || result.offers || [];
+
+    let html = `
+      <div style="
+        background:white;
+        margin:30px auto;
+        padding:25px;
+        max-width:900px;
+        border-radius:16px;
+        box-shadow:0 5px 20px rgba(0,0,0,0.12);
+      ">
+        <h2>✈️ Available Flights</h2>
+        <p>${origin} → ${destination}</p>
+    `;
+
+    if (!offers.length) {
+      html += `
+        <p style="margin-top:20px;">
+          No flights found for this date.
+        </p>
+      `;
+    } else {
+      offers.forEach((offer) => {
+        const airline =
+          offer.owner?.name ||
+          offer.slices?.[0]?.segments?.[0]?.marketing_carrier?.name ||
+          "Airline";
+
+        const price = offer.total_amount
+          ? `${offer.total_currency || ""} ${offer.total_amount}`
+          : "Price unavailable";
+
+        html += `
+          <div style="
+            border:1px solid #ddd;
+            padding:20px;
+            margin-top:15px;
+            border-radius:12px;
+          ">
+            <h3>${airline}</h3>
+            <p>✈️ ${origin} → ${destination}</p>
+            <h3>${price}</h3>
+
+            <button
+              style="
+                background:#08a878;
+                color:white;
+                border:none;
+                padding:12px 25px;
+                border-radius:8px;
+                cursor:pointer;
+              "
+              onclick="alert('Flight selected. Booking will be connected next.')"
+            >
+              Select Flight
+            </button>
+          </div>
+        `;
+      });
+    }
+
+    html += `</div>`;
+
+    document.querySelector(".features").insertAdjacentHTML(
+      "beforebegin",
+      html
+    );
+
+  } catch (error) {
+    alert("Flight search error: " + error.message);
+  } finally {
+    button.disabled = false;
+    button.textContent = "🔍 Search Flights";
+  }
+}, true);
 
 </script>
 
