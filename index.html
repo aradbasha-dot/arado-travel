@@ -927,8 +927,8 @@ async function searchTravel(){
   event.stopImmediatePropagation();
 
   const inputs = document.querySelectorAll('input[type="text"]');
-  const from = inputs[0].value.trim();
-  const to = inputs[1].value.trim();
+  const from = document.getElementById("from").value.trim();
+const to = document.getElementById("to").value.trim();
   const date = document.querySelector('input[type="date"]').value;
   const passengers = document.querySelector("select").value.split(" ")[0];
 
