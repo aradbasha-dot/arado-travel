@@ -837,13 +837,13 @@ async function searchTravel(){
 
   if(currentService === "Flights"){
     content.innerHTML = `
-      <div class="result-item">
-        <div>
-          <strong>✈️ Turkish Airlines</strong>
-          <small>Baghdad → Istanbul · Economy</small>
-        </div>
-        <div class="result-item" onclick="window.open('https://www.turkishairlines.com/', '_blank')" style="cursor:pointer;">
-      </div>
+      <div class="result-item" onclick="window.open('https://www.turkishairlines.com/', '_blank')" style="cursor:pointer;">
+  <div>
+    <strong>✈ Turkish Airlines</strong>
+    <small>Baghdad → Istanbul · Economy</small>
+  </div>
+  <div class="price">From $285</div>
+</div>
 
       <div class="result-item">
         <div>
